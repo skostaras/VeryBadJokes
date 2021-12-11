@@ -8,13 +8,12 @@ import {merge, fromEvent} from "rxjs";
 import {LessonsDataSource} from "../services/lessons.datasource";
 import { Category } from '../model/category';
 
-
 @Component({
-    selector: 'course',
-    templateUrl: './course.component.html',
-    styleUrls: ['./course.component.css']
+    selector: 'joke-category',
+    templateUrl: './joke-category.component.html',
+    styleUrls: ['./joke-category.component.css']
 })
-export class CourseComponent implements OnInit, AfterViewInit {
+export class JokeCategoryComponent implements OnInit, AfterViewInit {
 
     category:Category;
 
@@ -30,7 +29,7 @@ export class CourseComponent implements OnInit, AfterViewInit {
     @ViewChild('input', { static: true }) input: ElementRef;
 
     constructor(private route: ActivatedRoute,
-                private coursesService: CategoriesService) {
+                private categoriesService: CategoriesService) {
 
     }
 
@@ -38,7 +37,7 @@ export class CourseComponent implements OnInit, AfterViewInit {
 
         this.category = this.route.snapshot.data["category"];
 
-        this.dataSource = new LessonsDataSource(this.coursesService);
+        this.dataSource = new LessonsDataSource(this.categoriesService);
 
         this.dataSource.loadLessons(this.category.id, '', 'asc', 0, 3);
 

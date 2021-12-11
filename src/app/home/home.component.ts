@@ -13,13 +13,13 @@ export class HomeComponent implements OnInit {
 
     jokeCategories$: Observable<Category[]>;
 
-    constructor(private coursesService: CategoriesService) {
+    constructor(private categoriesService: CategoriesService) {
 
     }
 
     ngOnInit() {
 
-        const categories$ = this.coursesService.getAllCategories();
+        const categories$ = this.categoriesService.getAllCategories();
 
         this.jokeCategories$ = categories$.pipe(
           map(categories => categories)

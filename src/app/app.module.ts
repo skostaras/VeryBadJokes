@@ -10,8 +10,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import { HomeComponent } from './home/home.component';
 import {MatTabsModule} from '@angular/material/tabs';
-import { CoursesCardListComponent } from './courses-card-list/courses-card-list.component';
-import {CourseComponent} from "./course/course.component";
+import { CategoriesCardListComponent } from './categories-card-list/categories-card-list.component';
+import {JokeCategoryComponent} from "./joke-category/joke-category.component";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatInputModule } from "@angular/material/input";
@@ -33,8 +33,8 @@ import {MatMomentDateModule} from "@angular/material-moment-adapter";
     declarations: [
         AppComponent,
         HomeComponent,
-        CourseComponent,
-        CoursesCardListComponent,
+        JokeCategoryComponent,
+        CategoriesCardListComponent,
     ],
     imports: [
         BrowserModule,

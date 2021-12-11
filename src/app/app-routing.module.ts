@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {HomeComponent} from "./home/home.component";
-import {CourseComponent} from "./course/course.component";
+import {JokeCategoryComponent} from "./joke-category/joke-category.component";
 import {CategoryResolver} from "./services/category.resolver";
 
 const routes: Routes = [
@@ -12,7 +12,7 @@ const routes: Routes = [
     },
     {
         path: 'categories/:id',
-        component: CourseComponent,
+        component: JokeCategoryComponent,
         resolve: {
             course: CategoryResolver
         }

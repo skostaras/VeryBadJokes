@@ -3,11 +3,11 @@ import { MatDialog } from "@angular/material/dialog";
 import { Category } from '../model/category';
 
 @Component({
-    selector: 'courses-card-list',
-    templateUrl: './courses-card-list.component.html',
-    styleUrls: ['./courses-card-list.component.css']
+    selector: 'categories-card-list',
+    templateUrl: './categories-card-list.component.html',
+    styleUrls: ['./categories-card-list.component.css']
 })
-export class CoursesCardListComponent implements OnInit {
+export class CategoriesCardListComponent implements OnInit {
 
     @Input()
     categories: Category[];
