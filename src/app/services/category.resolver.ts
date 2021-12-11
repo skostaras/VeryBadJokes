@@ -4,7 +4,7 @@
 import {Injectable} from "@angular/core";
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from "@angular/router";
 import {Observable} from "rxjs";
-import {CategoriesService} from "./courses.service";
+import {CategoriesService} from "./categories.service";
 import { Category } from '../model/category';
 
 

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
-import {CategoriesService} from "../services/courses.service";
+import {CategoriesService} from "../services/categories.service";
 import {map} from "rxjs/operators";
 import { Category } from '../model/category';
 

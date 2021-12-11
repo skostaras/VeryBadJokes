@@ -23,10 +23,9 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatSortModule } from "@angular/material/sort";
 import { MatTableModule } from "@angular/material/table";
 import { MatToolbarModule } from "@angular/material/toolbar";
-import {CategoriesService} from "./services/courses.service";
+import {CategoriesService} from "./services/categories.service";
 import {HttpClientModule} from "@angular/common/http";
-import {CategoryResolver} from "./services/course.resolver";
-import { CourseDialogComponent } from './course-dialog/course-dialog.component';
+import {CategoryResolver} from "./services/category.resolver";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatMomentDateModule} from "@angular/material-moment-adapter";
 
@@ -36,7 +35,6 @@ import {MatMomentDateModule} from "@angular/material-moment-adapter";
         HomeComponent,
         CourseComponent,
         CoursesCardListComponent,
-        CourseDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -67,7 +65,6 @@ import {MatMomentDateModule} from "@angular/material-moment-adapter";
         CategoryResolver
     ],
     bootstrap: [AppComponent],
-    entryComponents: [CourseDialogComponent]
 })
 export class AppModule {
 }
