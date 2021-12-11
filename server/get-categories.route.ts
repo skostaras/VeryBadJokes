@@ -5,13 +5,13 @@ export function getAllCategories(req: Request, res: Response) {
     res.status(200).json({payload:Object.values(CATEGORIES)});
 }
 
-export function getCategoryById(req: Request, res: Response) {
+export function getCategoryByDescription(req: Request, res: Response) {
 
-    const categoryId = req.params["id"];
+    const categoryDescription = req.params["description"];
 
     const categories:any = Object.values(CATEGORIES);
 
-    const category = categories.find(category => category.id == categoryId);
+    const category = categories.find(category => category.description == categoryDescription);
 
     res.status(200).json(category);
 }

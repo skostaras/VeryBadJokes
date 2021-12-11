@@ -3,7 +3,7 @@ import {Observable, BehaviorSubject, of} from "rxjs";
 import {Lesson} from "../model/lesson";
 import {CategoriesService} from "./categories.service";
 import {catchError, finalize} from "rxjs/operators";
-export class LessonsDataSource implements DataSource<Lesson> {
+export class JokesDataSource implements DataSource<Lesson> {
 
     private lessonsSubject = new BehaviorSubject<Lesson[]>([]);
 
@@ -15,16 +15,13 @@ export class LessonsDataSource implements DataSource<Lesson> {
 
     }
 
-    loadLessons(courseId:number,
+    loadJokes(courseId:number,
                 filter:string,
-                sortDirection:string,
-                pageIndex:number,
-                pageSize:number) {
+                sortDirection:string) {
 
         this.loadingSubject.next(true);
 
-        this.categoriesService.findJokes(courseId, filter, sortDirection,
-            pageIndex, pageSize).pipe(
+        this.categoriesService.findJokesByCategory(courseId, filter, sortDirection).pipe(
                 catchError(() => of([])),
                 finalize(() => this.loadingSubject.next(false))
             )

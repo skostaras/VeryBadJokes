@@ -258,7 +258,3 @@ export const LESSONS = {
 
 };
 
-export function findLessonsForCourse(courseId:number) {
-    return Object.values(LESSONS).filter(lesson => lesson.courseId == courseId);
-}
-
