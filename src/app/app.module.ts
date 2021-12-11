@@ -26,7 +26,7 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import {CategoriesService} from "./services/categories.service";
 import {HttpClientModule} from "@angular/common/http";
 import {CategoryResolver} from "./services/category.resolver";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {ReactiveFormsModule} from "@angular/forms";
 import {MatMomentDateModule} from "@angular/material-moment-adapter";
 
 @NgModule({

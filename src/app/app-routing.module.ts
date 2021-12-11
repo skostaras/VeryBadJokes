@@ -14,7 +14,7 @@ const routes: Routes = [
         path: 'categories/:id',
         component: JokeCategoryComponent,
         resolve: {
-            course: CategoryResolver
+            category: CategoryResolver
         }
     },
     {
