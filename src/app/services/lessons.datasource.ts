@@ -3,9 +3,10 @@ import {Observable, BehaviorSubject, of} from "rxjs";
 import {Lesson} from "../model/lesson";
 import {CategoriesService} from "./categories.service";
 import {catchError, finalize} from "rxjs/operators";
-export class JokesDataSource implements DataSource<Lesson> {
+import { JokeApi } from '../model/jokeApi';
+export class JokesDataSource implements DataSource<JokeApi> {
 
-    private lessonsSubject = new BehaviorSubject<Lesson[]>([]);
+    private jokesSubject = new BehaviorSubject<JokeApi[]>([]);
 
     private loadingSubject = new BehaviorSubject<boolean>(false);
 
@@ -15,27 +16,25 @@ export class JokesDataSource implements DataSource<Lesson> {
 
     }
 
-    loadJokes(courseId:number,
-                filter:string,
-                sortDirection:string) {
+    loadJokes(category: string, filter:string, sortDirection:string) {
 
         this.loadingSubject.next(true);
 
-        this.categoriesService.findJokesByCategory(courseId, filter, sortDirection).pipe(
+        this.categoriesService.findJokesByCategory(category, filter, sortDirection).pipe(
                 catchError(() => of([])),
                 finalize(() => this.loadingSubject.next(false))
             )
-            .subscribe(lessons => this.lessonsSubject.next(lessons));
+            .subscribe(jokes => this.jokesSubject.next(jokes));
 
     }
 
-    connect(collectionViewer: CollectionViewer): Observable<Lesson[]> {
+    connect(collectionViewer: CollectionViewer): Observable<JokeApi[]> {
         console.log("Connecting data source");
-        return this.lessonsSubject.asObservable();
+        return this.jokesSubject.asObservable();
     }
 
     disconnect(collectionViewer: CollectionViewer): void {
-        this.lessonsSubject.complete();
+        this.jokesSubject.complete();
         this.loadingSubject.complete();
     }
 

@@ -6,6 +6,7 @@ import {debounceTime, distinctUntilChanged, startWith, tap, delay} from 'rxjs/op
 import {merge, fromEvent} from "rxjs";
 import {JokesDataSource} from "../services/lessons.datasource";
 import { Category } from '../model/category';
+import { Joke } from '../model/joke';
 
 @Component({
     selector: 'joke-category',
@@ -16,7 +17,7 @@ export class JokeCategoryComponent implements OnInit, AfterViewInit {
 
     category:Category;
     dataSource: JokesDataSource;
-    // displayedColumns= ["seqNo", "description", "duration"];
+    jokeData: Joke[] = [];
     displayedColumns: string[] = ['category', 'joke', 'flags'];
 
     @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -29,7 +30,9 @@ export class JokeCategoryComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         this.category = this.route.snapshot.data["category"];
         this.dataSource = new JokesDataSource(this.categoriesService);
-        this.dataSource.loadJokes(this.category.id, '', 'asc');
+        this.dataSource.loadJokes(this.category.description, '', 'asc');
+        console.log(this.dataSource);
+        
     }
 
     ngAfterViewInit() {
@@ -39,22 +42,22 @@ export class JokeCategoryComponent implements OnInit, AfterViewInit {
                 debounceTime(150),
                 distinctUntilChanged(),
                 tap(() => {
-                    this.loadLessonsPage();
+                    this.loadJokesPage();
                 })
             )
             .subscribe();
 
         merge(this.sort.sortChange)
         .pipe(
-            tap(() => this.loadLessonsPage())
+            tap(() => this.loadJokesPage())
         )
         .subscribe();
 
     }
 
-    loadLessonsPage() {
+    loadJokesPage() {
         this.dataSource.loadJokes(
-            this.category.id,
+            this.category.description,
             this.input.nativeElement.value,
             this.sort.direction);
     }
