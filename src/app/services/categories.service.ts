@@ -43,16 +43,15 @@ export class CategoriesService {
     //     );
     // }
 
-    findJokesByCategory(category = 'Any', filter = '', sortOrder = 'asc'):  Observable<JokeApi[]> {
+    findJokesByCategory(category = 'Any', filter = '', sortOrder = 'asc'):  Observable<JokeApi> {
             const requestUrl = 'https://v2.jokeapi.dev/joke/' + category;
-        return this.http.get(requestUrl, {
+        return this.http.get<JokeApi>(requestUrl, {
             params: new HttpParams()
                 .set('format', 'json')
                 .set('type', 'single')
                 .set('lang', 'en')
                 .set('amount', 10)
-        }).pipe(
-            map(res =>  res["payload"])
+        }
         );
     }
 

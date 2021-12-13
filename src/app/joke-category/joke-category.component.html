@@ -16,7 +16,7 @@
 
     </div>
 
-    <mat-table class="jokes-table mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="category"
+    <mat-table class="jokes-table mat-elevation-z8" [dataSource]="data" matSort matSortActive="category"
         matSortDirection="asc" matSortDisableClear>
 
         <ng-container matColumnDef="category">
@@ -39,7 +39,7 @@
 
             <mat-header-cell *matHeaderCellDef>Flags</mat-header-cell>
 
-            <mat-cell class="duration-cell" *matCellDef="let joke">{{joke.flags}}</mat-cell>
+            <mat-cell class="duration-cell" *matCellDef="let joke">{{joke.flags | activeFlags}}</mat-cell>
 
         </ng-container>
 

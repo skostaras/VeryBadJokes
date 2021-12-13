@@ -28,6 +28,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {CategoryResolver} from "./services/category.resolver";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatMomentDateModule} from "@angular/material-moment-adapter";
+import { ActiveFlagsPipe } from './joke-category/active-flags-pipe';
 
 @NgModule({
     declarations: [
@@ -35,6 +36,7 @@ import {MatMomentDateModule} from "@angular/material-moment-adapter";
         HomeComponent,
         JokeCategoryComponent,
         CategoriesCardListComponent,
+        ActiveFlagsPipe,
     ],
     imports: [
         BrowserModule,
