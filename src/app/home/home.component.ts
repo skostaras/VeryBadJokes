@@ -1,7 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
-import {CategoriesService} from "../services/categories.service";
-import {map} from "rxjs/operators";
+import { Component, OnInit } from '@angular/core';
+import { Observable } from "rxjs";
+import { CategoriesService } from "../services/categories.service";
 import { Category } from '../model/category';
 
 @Component({
@@ -18,14 +17,7 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-
-        const categories$ = this.categoriesService.getAllCategories();
-
-        this.jokeCategories$ = categories$.pipe(
-          map(categories => categories)
-        );
-
-
+        this.jokeCategories$ = this.categoriesService.getAllCategories();
     }
 
 }

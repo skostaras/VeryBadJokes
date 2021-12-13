@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
 import { Category } from '../model/category';
 
@@ -20,12 +20,3 @@ export class CategoriesCardListComponent implements OnInit {
     }
 
 }
-
-
-
-
-
-
-
-
-

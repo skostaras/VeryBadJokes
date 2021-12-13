@@ -1,17 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {HomeComponent} from "./home/home.component";
-import {JokeCategoryComponent} from "./joke-category/joke-category.component";
-import {CategoryResolver} from "./services/category.resolver";
+import { HomeComponent } from "./home/home.component";
+import { JokeCategoryComponent } from "./joke-category/joke-category.component";
+import { CategoryResolver } from "./services/category.resolver";
 
 const routes: Routes = [
     {
         path: "",
         component: HomeComponent
-
     },
     {
-        path: 'categories/:id',
+        path: 'categories/:category',
         component: JokeCategoryComponent,
         resolve: {
             category: CategoryResolver
@@ -24,7 +23,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
+    exports: [RouterModule]
 })
 export class AppRoutingModule { }

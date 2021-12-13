@@ -25,16 +25,6 @@ export const CATEGORIES: any = {
         description: 'Pun',
         iconUrl: 'https://angular-academy.s3.amazonaws.com/thumbnails/advanced_angular-small-v3.png',
     },
-    6: {
-        id: 6,
-        description: 'Spooky',
-        iconUrl: 'https://angular-academy.s3.amazonaws.com/thumbnails/typescript-2-small.png',
-    },
-    7: {
-        id: 7,
-        description: 'Christmas',
-        iconUrl: 'https://s3-us-west-1.amazonaws.com/angular-academy/blog/images/rxjs-reactive-patterns-small.png',
-    },
 };
 
 
