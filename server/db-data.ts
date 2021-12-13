@@ -3,6 +3,7 @@ export const CATEGORIES: any = {
     1: {
         id: 1,
         description: "Any",
+        // iconUrl: '../src/assets/images/any.jpeg',
         iconUrl: 'https://angular-academy.s3.amazonaws.com/thumbnails/angular2-for-beginners-small-v2.png',
     },
     2: {
