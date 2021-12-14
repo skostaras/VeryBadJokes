@@ -9,7 +9,6 @@ export class ActiveFlagsPipe implements PipeTransform {
     Object.keys(jokeFlags).forEach(function (key) {
 
       if (jokeFlags[key] === true) {
-        console.log(key, jokeFlags[key]);
         if (allFlags.length > 0) {
           allFlags = allFlags.concat(', ', key)
         } else {

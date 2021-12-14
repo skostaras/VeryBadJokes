@@ -1,8 +1,8 @@
 
 .category {
     text-align: center;
-    max-width: 390px;
-    margin: 0 auto;
+    max-width: 70%;
+    margin: 90px auto;
 }
 
 .category-thumbnail {
@@ -35,6 +35,7 @@
 .jokes-table {
     min-height: 360px;
     margin-top: 10px;
+    margin-bottom: 80px;
 }
 
 .spinner-container mat-spinner {

@@ -6,3 +6,7 @@ body {
 main {
     margin: 30px;
 }
+
+.example-spacer {
+    flex: 1 1 auto;
+  }

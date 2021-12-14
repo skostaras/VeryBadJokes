@@ -3,28 +3,27 @@ export const CATEGORIES: any = {
     1: {
         id: 1,
         description: "Any",
-        // iconUrl: '../src/assets/images/any.jpeg',
-        iconUrl: 'https://angular-academy.s3.amazonaws.com/thumbnails/angular2-for-beginners-small-v2.png',
+        iconUrl: "../assets/images/any.jpeg",
     },
     2: {
         id: 2,
         description: 'Misc',
-        iconUrl: 'https://s3-us-west-1.amazonaws.com/angular-university/course-images/security-cover-small-v2.png',
+        iconUrl: "../assets/images/misc.jpeg",
     },
     3: {
         id: 3,
         description: 'Programming',
-        iconUrl: 'https://s3-us-west-1.amazonaws.com/angular-university/course-images/angular-pwa-course.png',
+        iconUrl: "../assets/images/programmer.jpeg",
     },
     4: {
         id: 4,
         description: 'Dark',
-        iconUrl: 'https://angular-academy.s3.amazonaws.com/thumbnails/ngrx-angular.png',
+        iconUrl: "../assets/images/dark.jpeg",
     },
     5: {
         id: 5,
         description: 'Pun',
-        iconUrl: 'https://angular-academy.s3.amazonaws.com/thumbnails/advanced_angular-small-v3.png',
+        iconUrl: "../assets/images/pun.jpeg",
     },
 };
 
