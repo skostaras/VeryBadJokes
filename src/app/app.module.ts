@@ -27,6 +27,7 @@ import { CategoryResolver } from "./services/category.resolver";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
 import { ActiveFlagsPipe } from './jokes-by-category/active-flags-pipe';
+import { MatCheckboxModule } from '@angular/material/checkbox'
 
 @NgModule({
     declarations: [
@@ -57,7 +58,8 @@ import { ActiveFlagsPipe } from './jokes-by-category/active-flags-pipe';
         MatSelectModule,
         MatDatepickerModule,
         MatMomentDateModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatCheckboxModule,
     ],
     providers: [
         JokeCategoriesService,

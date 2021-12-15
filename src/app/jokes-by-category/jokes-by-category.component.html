@@ -6,9 +6,19 @@
 
     <mat-form-field>
 
-        <input matInput placeholder="Filter Jokes" #input>
+        <input matInput placeholder="Search Jokes" #input>
 
     </mat-form-field>
+
+    <section class="example-section" [formGroup]="jokeFlags"
+        style="display: flex; justify-content: space-around; align-items: baseline;">
+        <h4>Blacklist flags:</h4>
+
+        <span *ngFor="let option of flagOptions">
+
+            <mat-checkbox [formControlName]=option (ngModelChange)="filterJokes()">{{ option }}</mat-checkbox>
+        </span>
+    </section>
 
     <div class="spinner-container" *ngIf="loading">
 

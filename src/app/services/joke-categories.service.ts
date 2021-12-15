@@ -25,7 +25,7 @@ export class JokeCategoriesService {
       );
   }
 
-  findJokesByCategory(category = 'Any', filter = '', sortOrder = 'asc'): Observable<JokeApi> {
+  findJokesByCategory(category = 'Any', filter = '', sortOrder = 'asc', flags = ''): Observable<JokeApi> {
     const requestUrl = 'https://v2.jokeapi.dev/joke/' + category;
     return this.http.get<JokeApi>(requestUrl, {
       params: new HttpParams()
@@ -33,6 +33,7 @@ export class JokeCategoriesService {
         .set('type', 'single')
         .set('lang', 'en')
         .set('amount', 10)
+        .set('blacklistFlags', flags)
     }
     );
   }
