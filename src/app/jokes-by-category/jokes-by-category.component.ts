@@ -8,11 +8,11 @@ import { Category } from '../model/category';
 import { Joke } from '../model/joke';
 
 @Component({
-    selector: 'joke-category',
-    templateUrl: './joke-category.component.html',
-    styleUrls: ['./joke-category.component.css']
+    selector: 'jokes-by-category',
+    templateUrl: './jokes-by-category.component.html',
+    styleUrls: ['./jokes-by-category.component.css']
 })
-export class JokeCategoryComponent implements OnInit, AfterViewInit {
+export class JokesByCategoryComponent implements OnInit, AfterViewInit {
 
     loading = false;
     data: Joke[] = [];

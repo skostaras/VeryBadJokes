@@ -10,7 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { HomeComponent } from './home/home.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CategoriesCardListComponent } from './categories-card-list/categories-card-list.component';
-import { JokeCategoryComponent } from "./joke-category/joke-category.component";
+import { JokesByCategoryComponent } from "./jokes-by-category/jokes-by-category.component";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatInputModule } from "@angular/material/input";
@@ -27,13 +27,13 @@ import { HttpClientModule } from "@angular/common/http";
 import { CategoryResolver } from "./services/category.resolver";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
-import { ActiveFlagsPipe } from './joke-category/active-flags-pipe';
+import { ActiveFlagsPipe } from './jokes-by-category/active-flags-pipe';
 
 @NgModule({
     declarations: [
         AppComponent,
         HomeComponent,
-        JokeCategoryComponent,
+        JokesByCategoryComponent,
         CategoriesCardListComponent,
         ActiveFlagsPipe,
     ],
