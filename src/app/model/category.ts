@@ -1,7 +1,7 @@
 
 
-export interface Category {
-    id:number;
-    description:string;
+export interface JokeCategory {
+    id: number;
+    description: string;
     iconUrl: string;
 }

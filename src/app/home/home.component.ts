@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from "rxjs";
-import { CategoriesService } from "../services/categories.service";
-import { Category } from '../model/category';
+import { JokeCategoriesService } from "../services/joke-categories.service";
+import { JokeCategory } from '../model/category';
 
 @Component({
     selector: 'home',
@@ -10,14 +10,14 @@ import { Category } from '../model/category';
 })
 export class HomeComponent implements OnInit {
 
-    jokeCategories$: Observable<Category[]>;
+    jokeCategories$: Observable<JokeCategory[]>;
 
-    constructor(private categoriesService: CategoriesService) {
+    constructor(private jokeCategoriesService: JokeCategoriesService) {
 
     }
 
     ngOnInit() {
-        this.jokeCategories$ = this.categoriesService.getAllCategories();
+        this.jokeCategories$ = this.jokeCategoriesService.getAllCategories();
     }
 
 }

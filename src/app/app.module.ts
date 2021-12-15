@@ -21,7 +21,7 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatSortModule } from "@angular/material/sort";
 import { MatTableModule } from "@angular/material/table";
 import { MatToolbarModule } from "@angular/material/toolbar";
-import { CategoriesService } from "./services/categories.service";
+import { JokeCategoriesService } from "./services/joke-categories.service";
 import { HttpClientModule } from "@angular/common/http";
 import { CategoryResolver } from "./services/category.resolver";
 import { ReactiveFormsModule } from "@angular/forms";
@@ -60,7 +60,7 @@ import { ActiveFlagsPipe } from './jokes-by-category/active-flags-pipe';
         ReactiveFormsModule
     ],
     providers: [
-        CategoriesService,
+        JokeCategoriesService,
         CategoryResolver
     ],
     bootstrap: [AppComponent],

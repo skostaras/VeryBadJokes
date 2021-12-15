@@ -1,17 +1,17 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
 import { Observable } from "rxjs";
-import { CategoriesService } from "./categories.service";
-import { Category } from '../model/category';
+import { JokeCategoriesService } from "./joke-categories.service";
+import { JokeCategory } from '../model/category';
 
 @Injectable()
-export class CategoryResolver implements Resolve<Category> {
+export class CategoryResolver implements Resolve<JokeCategory> {
 
-    constructor(private categoriesService: CategoriesService) {
+    constructor(private jokeCategoriesService: JokeCategoriesService) {
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Category> {
-        return this.categoriesService.findCategoryByDescription(route.params['category']);
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<JokeCategory> {
+        return this.jokeCategoriesService.findCategoryByDescription(route.params['category']);
     }
 
 }

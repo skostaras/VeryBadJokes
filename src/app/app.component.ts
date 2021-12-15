@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Category } from './model/category';
-import { CategoriesService } from './services/categories.service';
+import { JokeCategory } from './model/category';
+import { JokeCategoriesService } from './services/joke-categories.service';
 
 @Component({
   selector: 'app-root',
@@ -10,14 +10,14 @@ import { CategoriesService } from './services/categories.service';
 })
 export class AppComponent {
 
-  jokeCategories$: Observable<Category[]>;
+  jokeCategories$: Observable<JokeCategory[]>;
 
-  constructor(private categoriesService: CategoriesService) {
+  constructor(private jokeCategoriesService: JokeCategoriesService) {
 
   }
 
   ngOnInit() {
-    this.jokeCategories$ = this.categoriesService.getAllCategories();
+    this.jokeCategories$ = this.jokeCategoriesService.getAllCategories();
   }
 
 }

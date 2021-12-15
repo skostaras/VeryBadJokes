@@ -1,10 +1,10 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { MatSort } from "@angular/material/sort";
-import { CategoriesService } from "../services/categories.service";
+import { JokeCategoriesService } from "../services/joke-categories.service";
 import { debounceTime, distinctUntilChanged, startWith, tap, delay, switchMap, map, catchError } from 'rxjs/operators';
 import { merge, fromEvent, of } from "rxjs";
-import { Category } from '../model/category';
+import { JokeCategory } from '../model/category';
 import { Joke } from '../model/joke';
 
 @Component({
@@ -16,19 +16,19 @@ export class JokesByCategoryComponent implements OnInit, AfterViewInit {
 
     loading = false;
     data: Joke[] = [];
-    category: Category;
+    jokeCategory: JokeCategory;
     displayedColumns: string[] = ['category', 'joke', 'flags'];
 
     @ViewChild(MatSort, { static: true }) sort: MatSort;
     @ViewChild('input', { static: true }) input: ElementRef;
 
     constructor(private route: ActivatedRoute,
-        private categoriesService: CategoriesService) {
+        private jokeCategoriesService: JokeCategoriesService) {
     }
 
     ngOnInit() {
-        this.category = this.route.snapshot.data["category"];
-        this.loadJokes(this.category.description, '', 'asc');
+        this.jokeCategory = this.route.snapshot.data["category"];
+        this.loadJokes(this.jokeCategory.description, '', 'asc');
     }
 
     loadJokes(category: string, filter: string, sortDirection: string) {
@@ -38,7 +38,7 @@ export class JokesByCategoryComponent implements OnInit, AfterViewInit {
             .pipe(
                 startWith({}),
                 switchMap(() => {
-                    return this.categoriesService.findJokesByCategory(category, filter, sortDirection).pipe(catchError(() => of(null)));
+                    return this.jokeCategoriesService.findJokesByCategory(category, filter, sortDirection).pipe(catchError(() => of(null)));
                 }),
                 map(data => {
                     this.loading = false;

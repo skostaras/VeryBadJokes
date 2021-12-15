@@ -7,23 +7,23 @@ export const CATEGORIES: any = {
     },
     2: {
         id: 2,
-        description: 'Misc',
-        iconUrl: "../assets/images/misc.jpeg",
-    },
-    3: {
-        id: 3,
         description: 'Programming',
         iconUrl: "../assets/images/programmer.jpeg",
     },
-    4: {
-        id: 4,
+    3: {
+        id: 3,
         description: 'Dark',
         iconUrl: "../assets/images/dark.jpeg",
     },
-    5: {
-        id: 5,
+    4: {
+        id: 4,
         description: 'Pun',
         iconUrl: "../assets/images/pun.jpeg",
+    },
+    5: {
+        id: 5,
+        description: 'Misc',
+        iconUrl: "../assets/images/misc.jpeg",
     },
 };
 
