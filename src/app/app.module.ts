@@ -9,7 +9,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { HomeComponent } from './home/home.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import { CategoriesCardListComponent } from './categories-card-list/categories-card-list.component';
 import { JokesByCategoryComponent } from "./jokes-by-category/jokes-by-category.component";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatDialogModule } from "@angular/material/dialog";
@@ -34,7 +33,6 @@ import { ActiveFlagsPipe } from './jokes-by-category/active-flags-pipe';
         AppComponent,
         HomeComponent,
         JokesByCategoryComponent,
-        CategoriesCardListComponent,
         ActiveFlagsPipe,
     ],
     imports: [
