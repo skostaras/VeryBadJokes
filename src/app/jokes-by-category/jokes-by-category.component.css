@@ -2,7 +2,7 @@
 .category {
     text-align: center;
     max-width: 70%;
-    margin: 90px auto;
+    margin: 50px auto 90px auto;
 }
 
 .category-thumbnail {
@@ -13,7 +13,7 @@
 
 .description-cell {
     text-align: left;
-    margin: 10px auto;
+    margin: 10px 0;
 }
 
 .duration-cell {
@@ -40,4 +40,16 @@
 
 .spinner-container mat-spinner {
     margin: 130px auto 0 auto;
+}
+
+.mat-column-category {
+    flex: 0 0 10%;
+}
+
+.mat-column-joke {
+    flex: 0 0 80%;
+}
+
+.mat-column-flags {
+    flex: 0 0 15%;
 }
