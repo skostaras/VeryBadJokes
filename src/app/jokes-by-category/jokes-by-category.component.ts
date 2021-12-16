@@ -17,6 +17,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class JokesByCategoryComponent implements OnInit, AfterViewInit {
 
     loading = false;
+    activeFlags = '';
+    allComplete: boolean = false;
     jokes: Joke[] = [];
     sortedJokes: Joke[];
     jokeCategory: JokeCategory;
@@ -39,11 +41,31 @@ export class JokesByCategoryComponent implements OnInit, AfterViewInit {
 
     jokeFlags: FormGroup;
 
-    flagOptions = ['nsfw', 'religious', 'political', 'racist', 'sexist', 'explicit'];
+    flagOptions = [
+        { name: 'nsfw', checked: false },
+        { name: 'religious', checked: false },
+        { name: 'political', checked: false },
+        { name: 'racist', checked: false },
+        { name: 'sexist', checked: false },
+        { name: 'explicit', checked: false }
+    ];
 
     ngOnInit() {
         this.jokeCategory = this.route.snapshot.data["category"];
         this.loadJokes(this.jokeCategory.description, '', 'asc');
+    }
+
+
+    setAll(checked: boolean) {
+        this.allComplete = checked;
+        // if (this.task.subtasks == null) {
+        //     return;
+        // }
+        this.flagOptions.forEach(option => (option.checked = checked));
+    }
+
+    someComplete() {
+        return this.flagOptions.filter(option => option.checked).length > 0 && !this.allComplete;
     }
 
     loadJokes(category: string, filter: string, sortDirection: string, flags = '') {
@@ -77,19 +99,20 @@ export class JokesByCategoryComponent implements OnInit, AfterViewInit {
     }
 
     filterJokes() {
-        let allFlags = ''
+        this.allComplete = this.flagOptions.every(option => option.checked);
+        this.activeFlags = ''
 
         this.flagOptions.forEach(flag => {
-            if (this.jokeFlags.get(flag).value === true) {
-                allFlags = allFlags + flag + ',';
+            if (this.jokeFlags.get(flag.name).value === true) {
+                this.activeFlags = this.activeFlags + flag.name + ',';
             }
         });
 
         //removes last comma
-        if (allFlags.length > 0) {
-            allFlags = allFlags.substring(0, allFlags.length - 1);
+        if (this.activeFlags.length > 0) {
+            this.activeFlags = this.activeFlags.substring(0, this.activeFlags.length - 1);
         }
-        this.loadJokes(this.jokeCategory.description, '', 'asc', allFlags);
+        this.loadJokes(this.jokeCategory.description, '', 'asc', this.activeFlags);
     }
 
     ngAfterViewInit() {

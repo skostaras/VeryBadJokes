@@ -5,18 +5,31 @@
     <img class="category-thumbnail" [src]="jokeCategory?.iconUrl">
 
     <mat-form-field>
-
-        <input matInput placeholder="Search Jokes" #input>
-
+        <input matInput placeholder="Filter Jokes" #input>
     </mat-form-field>
 
     <section class="example-section" [formGroup]="jokeFlags"
         style="display: flex; justify-content: space-around; align-items: baseline;">
-        <h4>Blacklist flags:</h4>
+        <h3>Blacklist flags:</h3>
 
-        <span *ngFor="let option of flagOptions">
-            <mat-checkbox [formControlName]=option (ngModelChange)="filterJokes()">{{ option }}</mat-checkbox>
+        <span class="example-list-section">
+            <mat-checkbox class="example-margin" style="font-weight: bold;" [checked]="allComplete"
+                [indeterminate]="someComplete()" (change)="setAll($event.checked)">
+                <span [innerHTML]="allComplete?'Unselect All':'Select All'"></span>
+            </mat-checkbox>
         </span>
+
+        <span *ngFor=" let option of flagOptions">
+            <mat-checkbox [(ngModel)]="option.checked" [formControlName]=option.name (ngModelChange)="filterJokes()">{{
+                option.name }}</mat-checkbox>
+        </span>
+    </section>
+
+    <section class="example-section">
+        <button mat-button class="mat-raised-button mat-primary" style="background-color: #7e3399;"
+            (click)="loadJokes(this.jokeCategory.description, '', 'asc', this.activeFlags);">
+            Search New Jokes
+        </button>
     </section>
 
     <div class="spinner-div-container">
