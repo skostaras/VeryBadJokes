@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { MatSort } from "@angular/material/sort";
+import { MatSort, Sort } from "@angular/material/sort";
 import { JokeCategoriesService } from "../services/joke-categories.service";
 import { debounceTime, distinctUntilChanged, startWith, tap, delay, switchMap, map, catchError } from 'rxjs/operators';
 import { merge, fromEvent, of } from "rxjs";
@@ -17,7 +17,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class JokesByCategoryComponent implements OnInit, AfterViewInit {
 
     loading = false;
-    data: Joke[] = [];
+    jokes: Joke[] = [];
+    sortedJokes: Joke[];
     jokeCategory: JokeCategory;
     displayedColumns: string[] = ['category', 'joke', 'flags'];
 
@@ -67,9 +68,11 @@ export class JokesByCategoryComponent implements OnInit, AfterViewInit {
                     return data.jokes;
                 }),
             )
-            .subscribe(data => (
-                this.data = data
-            ));
+            .subscribe(data => {
+                this.jokes = data;
+                this.sortedJokes = this.jokes.slice();
+            }
+            );
 
     }
 
@@ -109,5 +112,29 @@ export class JokesByCategoryComponent implements OnInit, AfterViewInit {
 
     }
 
-}
+    sortData(sort: Sort) {
+        console.log(this.sortedJokes);
 
+        const data = this.jokes.slice();
+        if (!sort.active || sort.direction === '') {
+            this.sortedJokes = data;
+            return;
+        }
+
+        this.sortedJokes = data.sort((a, b) => {
+            const isAsc = sort.direction === 'asc';
+            switch (sort.active) {
+                case 'category':
+                    return compare(a.category, b.category, isAsc);
+                default:
+                    return 0;
+            }
+        });
+
+
+        function compare(a: number | string, b: number | string, isAsc: boolean) {
+            return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+        }
+    }
+
+}

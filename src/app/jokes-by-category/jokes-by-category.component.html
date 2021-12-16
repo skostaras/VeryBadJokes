@@ -21,38 +21,26 @@
 
     <div class="spinner-div-container">
         <span class="spinner-container" *ngIf="loading">
-
-
             <mat-spinner></mat-spinner>
-
         </span>
     </div>
 
-    <mat-table class="jokes-table mat-elevation-z8" [dataSource]="data" matSort matSortActive="category"
-        matSortDirection="asc" matSortDisableClear>
+    <mat-table class="jokes-table mat-elevation-z8" [dataSource]="sortedJokes" matSort matSortActive="category"
+        matSortDirection="asc" matSortDisableClear (matSortChange)="sortData($event)">
 
         <ng-container matColumnDef="category">
-
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
-
+            <mat-header-cell *matHeaderCellDef mat-sort-header="category">Category</mat-header-cell>
             <mat-cell *matCellDef="let joke">{{joke.category}}</mat-cell>
-
         </ng-container>
 
         <ng-container matColumnDef="joke">
-
             <mat-header-cell *matHeaderCellDef>Joke</mat-header-cell>
-
             <mat-cell class="description-cell" *matCellDef="let joke">{{joke.joke}}</mat-cell>
-
         </ng-container>
 
         <ng-container matColumnDef="flags">
-
             <mat-header-cell *matHeaderCellDef>Flags</mat-header-cell>
-
             <mat-cell class="duration-cell" *matCellDef="let joke">{{joke.flags | activeFlags}}</mat-cell>
-
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
