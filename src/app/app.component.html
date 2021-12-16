@@ -2,7 +2,7 @@
     <mat-sidenav #start style="background-color: #7e3399;">
         <mat-nav-list>
 
-            <a *ngFor="let jokeCategory of jokeCategories$ | async" mat-list-item
+            <a *ngFor="let jokeCategory of jokeCategories" mat-list-item
                 [routerLink]="['/categories/' + jokeCategory.description]" style="color: white;">
                 <mat-icon>chevron_right</mat-icon>
                 <span>{{jokeCategory.description}}</span>

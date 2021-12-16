@@ -10,14 +10,14 @@ import { JokeCategory } from '../model/category';
 })
 export class HomeComponent implements OnInit {
 
-    jokeCategories$: Observable<JokeCategory[]>;
+    jokeCategories: Observable<JokeCategory[]>;
 
     constructor(private jokeCategoriesService: JokeCategoriesService) {
 
     }
 
     ngOnInit() {
-        this.jokeCategories$ = this.jokeCategoriesService.getAllCategories();
+        this.jokeCategories = this.jokeCategoriesService.getAllCategories();
     }
 
 }

@@ -15,15 +15,17 @@
         <h4>Blacklist flags:</h4>
 
         <span *ngFor="let option of flagOptions">
-
             <mat-checkbox [formControlName]=option (ngModelChange)="filterJokes()">{{ option }}</mat-checkbox>
         </span>
     </section>
 
-    <div class="spinner-container" *ngIf="loading">
+    <div class="spinner-div-container">
+        <span class="spinner-container" *ngIf="loading">
 
-        <mat-spinner></mat-spinner>
 
+            <mat-spinner></mat-spinner>
+
+        </span>
     </div>
 
     <mat-table class="jokes-table mat-elevation-z8" [dataSource]="data" matSort matSortActive="category"

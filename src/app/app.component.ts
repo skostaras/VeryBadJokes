@@ -10,14 +10,14 @@ import { JokeCategoriesService } from './services/joke-categories.service';
 })
 export class AppComponent {
 
-  jokeCategories$: Observable<JokeCategory[]>;
+  jokeCategories: Observable<JokeCategory[]>;
 
   constructor(private jokeCategoriesService: JokeCategoriesService) {
 
   }
 
   ngOnInit() {
-    this.jokeCategories$ = this.jokeCategoriesService.getAllCategories();
+    this.jokeCategories = this.jokeCategoriesService.getAllCategories();
   }
 
 }

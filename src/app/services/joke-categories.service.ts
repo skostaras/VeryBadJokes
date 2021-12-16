@@ -3,26 +3,51 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
 import { JokeCategory } from '../model/category';
 import { JokeApi } from "../model/jokeApi";
 
 @Injectable()
 export class JokeCategoriesService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) { }
 
-  }
+  jokeCategories: any = {
+    1: {
+      id: 1,
+      description: "Any",
+      iconUrl: "../assets/images/any.jpeg",
+    },
+    2: {
+      id: 2,
+      description: 'Programming',
+      iconUrl: "../assets/images/programmer.jpeg",
+    },
+    3: {
+      id: 3,
+      description: 'Dark',
+      iconUrl: "../assets/images/dark.jpeg",
+    },
+    4: {
+      id: 4,
+      description: 'Pun',
+      iconUrl: "../assets/images/pun.jpeg",
+    },
+    5: {
+      id: 5,
+      description: 'Misc',
+      iconUrl: "../assets/images/misc.jpeg",
+    },
+  };
 
   findCategoryByDescription(description: string): Observable<JokeCategory> {
-    return this.http.get<JokeCategory>(`/api/categories/${description}`);
+    const categories: any = Object.values(this.jokeCategories);
+    const category = categories.find(category => category.description == description);
+    return category;
   }
 
   getAllCategories(): Observable<JokeCategory[]> {
-    return this.http.get('/api/categories')
-      .pipe(
-        map(res => res['payload'])
-      );
+    const allCategories: any = Object.values(this.jokeCategories);
+    return allCategories;
   }
 
   findJokesByCategory(category = 'Any', filter = '', sortOrder = 'asc', flags = ''): Observable<JokeApi> {
@@ -37,5 +62,30 @@ export class JokeCategoriesService {
     }
     );
   }
+
+
+  //   searchLessons(req: Request, res: Response) {
+
+  //     const queryParams = req.query;
+
+  //     const courseId = queryParams.courseId,
+  //           filter = queryParams.filter || '',
+  //           sortOrder = queryParams.sortOrder;
+
+  //     let lessons = Object.values(LESSONS).filter(lesson => lesson.courseId == courseId).sort((l1, l2) => l1.id - l2.id);
+
+  //     if (filter) {
+  //        lessons = lessons.filter(lesson => lesson.description.trim().toLowerCase().search(filter.toLowerCase()) >= 0);
+  //     }
+
+  //     if (sortOrder == "desc") {
+  //         lessons = lessons.reverse();
+  //     }
+
+  //     setTimeout(() => {
+  //         res.status(200).json({payload: lessons});
+  //     },1000);
+
+  // }
 
 }
