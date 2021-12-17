@@ -2,33 +2,25 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { ActivatedRoute } from "@angular/router";
 import { MatSort, Sort } from "@angular/material/sort";
 import { JokeCategoriesService } from "../services/joke-categories.service";
-import { debounceTime, distinctUntilChanged, startWith, tap, delay, switchMap, map, catchError } from 'rxjs/operators';
-import { merge, fromEvent, of } from "rxjs";
+import { startWith, switchMap, map, catchError } from 'rxjs/operators';
+import { merge, of } from "rxjs";
 import { JokeCategory } from '../model/category';
 import { Joke } from '../model/joke';
 import { FormBuilder, FormGroup } from '@angular/forms';
-
-
+import { LocalStorageService } from '../services/local-storage.service';
 @Component({
     selector: 'jokes-by-category',
     templateUrl: './jokes-by-category.component.html',
-    styleUrls: ['./jokes-by-category.component.css']
+    styleUrls: ['./jokes-by-category.component.css'],
 })
 export class JokesByCategoryComponent implements OnInit, AfterViewInit {
 
-    loading = false;
-    activeFlags = '';
-    allComplete: boolean = false;
-    jokes: Joke[] = [];
-    sortedJokes: Joke[];
-    jokeCategory: JokeCategory;
-    displayedColumns: string[] = ['category', 'joke', 'flags'];
-
-    @ViewChild(MatSort, { static: true }) sort: MatSort;
-    @ViewChild('input', { static: true }) input: ElementRef;
-
-    constructor(private route: ActivatedRoute,
-        private jokeCategoriesService: JokeCategoriesService, fb: FormBuilder) {
+    constructor(
+        private route: ActivatedRoute,
+        private jokeCategoriesService: JokeCategoriesService,
+        private fb: FormBuilder,
+        private localStorageService: LocalStorageService
+    ) {
         this.jokeFlags = fb.group({
             nsfw: false,
             religious: false,
@@ -39,7 +31,8 @@ export class JokesByCategoryComponent implements OnInit, AfterViewInit {
         });
     }
 
-    jokeFlags: FormGroup;
+    @ViewChild(MatSort, { static: true }) sort: MatSort;
+    @ViewChild('input', { static: true }) input: ElementRef;
 
     flagOptions = [
         { name: 'nsfw', checked: false },
@@ -50,69 +43,24 @@ export class JokesByCategoryComponent implements OnInit, AfterViewInit {
         { name: 'explicit', checked: false }
     ];
 
+    jokeFlags: FormGroup;
+    activeFlags: string;
+    allFlagsChecked: boolean = false;
+
+    jokes: Joke[] = [];
+    sortedJokes: Joke[];
+
+    loading = false;
+
+    jokeCategory: JokeCategory;
+    displayedColumns: string[] = ['category', 'joke', 'flags'];
+
     ngOnInit() {
+        if (this.localStorageService.hasItem('activeFlags')) {
+            this.setActiveFlagsFromLocalStorage();
+        }
         this.jokeCategory = this.route.snapshot.data["category"];
         this.loadJokes(this.jokeCategory.description, '', 'asc');
-    }
-
-
-    setAll(checked: boolean) {
-        this.allComplete = checked;
-        // if (this.task.subtasks == null) {
-        //     return;
-        // }
-        this.flagOptions.forEach(option => (option.checked = checked));
-    }
-
-    someComplete() {
-        return this.flagOptions.filter(option => option.checked).length > 0 && !this.allComplete;
-    }
-
-    loadJokes(category: string, filter: string, sortDirection: string, flags = '') {
-
-        this.loading = true;
-        merge()
-            .pipe(
-                startWith({}),
-                switchMap(() => {
-                    return this.jokeCategoriesService.findJokesByCategory(category, filter, sortDirection, flags).pipe(catchError(() => of(null)));
-                }),
-                map(data => {
-                    this.loading = false;
-                    if (data === null) {
-                        return [];
-                    }
-
-                    // Only refresh the result length if there is new data. In case of rate
-                    // limit errors, we do not want to reset the paginator to zero, as that
-                    // would prevent users from re-triggering requests.
-                    // this.resultsLength = data.amount;
-                    return data.jokes;
-                }),
-            )
-            .subscribe(data => {
-                this.jokes = data;
-                this.sortedJokes = this.jokes.slice();
-            }
-            );
-
-    }
-
-    filterJokes() {
-        this.allComplete = this.flagOptions.every(option => option.checked);
-        this.activeFlags = ''
-
-        this.flagOptions.forEach(flag => {
-            if (this.jokeFlags.get(flag.name).value === true) {
-                this.activeFlags = this.activeFlags + flag.name + ',';
-            }
-        });
-
-        //removes last comma
-        if (this.activeFlags.length > 0) {
-            this.activeFlags = this.activeFlags.substring(0, this.activeFlags.length - 1);
-        }
-        this.loadJokes(this.jokeCategory.description, '', 'asc', this.activeFlags);
     }
 
     ngAfterViewInit() {
@@ -135,8 +83,84 @@ export class JokesByCategoryComponent implements OnInit, AfterViewInit {
 
     }
 
+    setActiveFlagsFromLocalStorage() {
+        this.activeFlags = this.localStorageService.getItem('activeFlags')
+
+        this.flagOptions.forEach(flag => {
+            if (this.activeFlags.includes(flag.name)) {
+                flag.checked = true
+            }
+        });
+
+        this.jokeFlags.setValue({
+            nsfw: this.getFlagStatus('nsfw'),
+            religious: this.getFlagStatus('religious'),
+            political: this.getFlagStatus('political'),
+            racist: this.getFlagStatus('racist'),
+            sexist: this.getFlagStatus('sexist'),
+            explicit: this.getFlagStatus('explicit'),
+        })
+    }
+
+    getFlagStatus(flag: string) {
+        return this.flagOptions.filter((option) => option.name === flag)[0].checked;
+    }
+
+    
+    flagsTrigger() {
+        this.allFlagsChecked = this.flagOptions.every(option => option.checked);
+        this.activeFlags = ''
+
+        this.flagOptions.forEach(flag => {
+            if (this.jokeFlags.get(flag.name).value === true) {
+                this.activeFlags = this.activeFlags + flag.name + ',';
+            }
+        });
+
+        //removes last comma
+        if (this.activeFlags.split(',').length > 1) {
+            this.activeFlags = this.activeFlags.substring(0, this.activeFlags.length - 1);
+        }
+
+        this.localStorageService.setItem('activeFlags', this.activeFlags);
+    }
+
+    setAllFlags(checked: boolean) {
+        this.allFlagsChecked = checked;
+        this.flagOptions.forEach(option => (option.checked = checked));
+    }
+
+    someFlagsChecked() {
+        return this.flagOptions.filter(option => option.checked).length > 0 && !this.allFlagsChecked;
+    }
+
+    loadJokes(category: string, filter: string, sortDirection: string, flags = '') {
+
+        this.loading = true;
+        merge()
+            .pipe(
+                startWith({}),
+                switchMap(() => {
+                    return this.jokeCategoriesService.findJokesByCategory(category, filter, sortDirection, flags).pipe(catchError(() => of(null)));
+                }),
+                map(data => {
+                    if (data === null) {
+                        this.loading = false;
+                        return [];
+                    }
+                    return data.jokes;
+                }),
+            )
+            .subscribe(data => {
+                this.jokes = data;
+                this.sortedJokes = this.jokes.slice();
+                this.loading = false;
+            }
+            );
+
+    }
+
     sortData(sort: Sort) {
-        console.log(this.sortedJokes);
 
         const data = this.jokes.slice();
         if (!sort.active || sort.direction === '') {
