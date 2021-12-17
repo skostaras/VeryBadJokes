@@ -3,7 +3,7 @@
         <mat-nav-list>
 
             <a *ngFor="let jokeCategory of jokeCategories" mat-list-item
-                [routerLink]="['/categories/' + jokeCategory.description]" style="color: white;">
+                [href]="['/categories/' + jokeCategory.description]" style="color: white;">
                 <mat-icon>chevron_right</mat-icon>
                 <span>{{jokeCategory.description}}</span>
             </a>
@@ -28,4 +28,14 @@
 
 
     <router-outlet></router-outlet>
+
+
+    <mat-toolbar color="primary" style="background-color: #7e3399; height: 45px;">
+        <span class="example-spacer"></span>
+        <span style="font-size: initial;">Made by Stefanos Kostaras, <small>with the help
+                of&nbsp;&nbsp;</small></span><a href="https://sv443.net/jokeapi/v2/#info"><small>JokeAPI</small></a>
+
+        <!-- https://sv443.net/jokeapi/v2/#info -->
+
+    </mat-toolbar>
 </mat-sidenav-container>

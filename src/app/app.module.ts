@@ -29,6 +29,8 @@ import { MatMomentDateModule } from "@angular/material-moment-adapter";
 import { ActiveFlagsPipe } from './jokes-by-category/active-flags-pipe';
 import { TableFilterPipe } from './jokes-by-category/table-filter-pipe';
 import { MatCheckboxModule } from '@angular/material/checkbox'
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
     declarations: [
@@ -39,7 +41,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox'
         TableFilterPipe,
     ],
     imports: [
+        CommonModule,
         BrowserModule,
+        RouterModule,
         BrowserAnimationsModule,
         HttpClientModule,
         MatMenuModule,
@@ -65,7 +69,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox'
     ],
     providers: [
         JokeCategoriesService,
-        CategoryResolver
+        CategoryResolver,
     ],
     bootstrap: [AppComponent],
 })
