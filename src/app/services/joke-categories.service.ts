@@ -50,7 +50,7 @@ export class JokeCategoriesService {
     return allCategories;
   }
 
-  findJokesByCategory(category = 'Any', filter = '', sortOrder = 'asc', flags = ''): Observable<JokeApi> {
+  findJokesByCategory(category = 'Any', flags = ''): Observable<JokeApi> {
     const requestUrl = 'https://v2.jokeapi.dev/joke/' + category;
     return this.http.get<JokeApi>(requestUrl, {
       params: new HttpParams()

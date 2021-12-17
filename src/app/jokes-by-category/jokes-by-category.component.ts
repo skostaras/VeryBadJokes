@@ -2,8 +2,8 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { ActivatedRoute } from "@angular/router";
 import { MatSort, Sort } from "@angular/material/sort";
 import { JokeCategoriesService } from "../services/joke-categories.service";
-import { startWith, switchMap, map, catchError } from 'rxjs/operators';
-import { merge, of } from "rxjs";
+import { startWith, switchMap, map, catchError, debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { fromEvent, merge, of } from "rxjs";
 import { JokeCategory } from '../model/category';
 import { Joke } from '../model/joke';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -60,26 +60,21 @@ export class JokesByCategoryComponent implements OnInit, AfterViewInit {
             this.setActiveFlagsFromLocalStorage();
         }
         this.jokeCategory = this.route.snapshot.data["category"];
-        this.loadJokes(this.jokeCategory.description, '', 'asc');
+        this.loadJokes(this.jokeCategory.description);
     }
 
     ngAfterViewInit() {
 
-        // fromEvent(this.input.nativeElement, 'keyup')
-        //     .pipe(
-        //         debounceTime(150),
-        //         distinctUntilChanged(),
-        //         tap(() => {
-        //             this.loadJokesPage();
-        //         })
-        //     )
-        //     .subscribe();
+        fromEvent(this.input.nativeElement, 'keyup')
+            .pipe(
+                debounceTime(150),
+                distinctUntilChanged(),
+                tap(() => {
+                    this.loadJokes(this.jokeCategory.description, this.activeFlags);
+                })
+            )
+            .subscribe();
 
-        // merge(this.sort.sortChange)
-        //     .pipe(
-        //         tap(() => this.loadJokesPage())
-        //     )
-        //     .subscribe();
 
     }
 
@@ -134,14 +129,14 @@ export class JokesByCategoryComponent implements OnInit, AfterViewInit {
         return this.flagOptions.filter(option => option.checked).length > 0 && !this.allFlagsChecked;
     }
 
-    loadJokes(category: string, filter: string, sortDirection: string, flags = '') {
+    loadJokes(category: string, flags = '') {
 
         this.loading = true;
         merge()
             .pipe(
                 startWith({}),
                 switchMap(() => {
-                    return this.jokeCategoriesService.findJokesByCategory(category, filter, sortDirection, flags).pipe(catchError(() => of(null)));
+                    return this.jokeCategoriesService.findJokesByCategory(category, flags).pipe(catchError(() => of(null)));
                 }),
                 map(data => {
                     if (data === null) {
