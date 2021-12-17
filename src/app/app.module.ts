@@ -27,6 +27,7 @@ import { CategoryResolver } from "./services/category.resolver";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
 import { ActiveFlagsPipe } from './jokes-by-category/active-flags-pipe';
+import { TableFilterPipe } from './jokes-by-category/table-filter-pipe';
 import { MatCheckboxModule } from '@angular/material/checkbox'
 
 @NgModule({
@@ -35,6 +36,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox'
         HomeComponent,
         JokesByCategoryComponent,
         ActiveFlagsPipe,
+        TableFilterPipe,
     ],
     imports: [
         BrowserModule,

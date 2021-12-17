@@ -6,14 +6,15 @@ import { startWith, switchMap, map, catchError, debounceTime, distinctUntilChang
 import { fromEvent, merge, of } from "rxjs";
 import { JokeCategory } from '../model/category';
 import { Joke } from '../model/joke';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { LocalStorageService } from '../services/local-storage.service';
+import { MatTableDataSource } from '@angular/material/table';
 @Component({
     selector: 'jokes-by-category',
     templateUrl: './jokes-by-category.component.html',
     styleUrls: ['./jokes-by-category.component.css'],
 })
-export class JokesByCategoryComponent implements OnInit, AfterViewInit {
+export class JokesByCategoryComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
@@ -46,9 +47,12 @@ export class JokesByCategoryComponent implements OnInit, AfterViewInit {
     jokeFlags: FormGroup;
     activeFlags: string;
     allFlagsChecked: boolean = false;
+    flagsForTableFilter = new FormControl();
 
     jokes: Joke[] = [];
     sortedJokes: Joke[];
+
+    // dataSource = new MatTableDataSource(ELEMENT_DATA);
 
     loading = false;
 
@@ -56,26 +60,14 @@ export class JokesByCategoryComponent implements OnInit, AfterViewInit {
     displayedColumns: string[] = ['category', 'joke', 'flags'];
 
     ngOnInit() {
+        this.flagsForTableFilter.valueChanges.subscribe(() => {
+            this.flagsTableFilterTrigger();
+        })
         if (this.localStorageService.hasItem('activeFlags')) {
             this.setActiveFlagsFromLocalStorage();
         }
         this.jokeCategory = this.route.snapshot.data["category"];
         this.loadJokes(this.jokeCategory.description);
-    }
-
-    ngAfterViewInit() {
-
-        fromEvent(this.input.nativeElement, 'keyup')
-            .pipe(
-                debounceTime(150),
-                distinctUntilChanged(),
-                tap(() => {
-                    this.loadJokes(this.jokeCategory.description, this.activeFlags);
-                })
-            )
-            .subscribe();
-
-
     }
 
     setActiveFlagsFromLocalStorage() {
@@ -129,6 +121,22 @@ export class JokesByCategoryComponent implements OnInit, AfterViewInit {
         return this.flagOptions.filter(option => option.checked).length > 0 && !this.allFlagsChecked;
     }
 
+    flagsTableFilterTrigger() {
+        console.log(this.flagsForTableFilter.value);
+        console.log(this.sortedJokes);
+
+        // return this.flagOptions.filter((option) => option.name === flag)[0].checked;
+        console.log(this.flagsForTableFilter.value[this.flagsForTableFilter.value.length - 1]);
+        
+        this.sortedJokes.filter((joke) => joke.flags[this.flagsForTableFilter.value[this.flagsForTableFilter.value.length - 1]] != true );
+
+        console.log(this.sortedJokes);
+        
+        // this.sortedJokes = [];
+        // this.sortedJokes.pop();
+        
+    }
+
     loadJokes(category: string, flags = '') {
 
         this.loading = true;
@@ -178,5 +186,11 @@ export class JokesByCategoryComponent implements OnInit, AfterViewInit {
             return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
         }
     }
+
+      applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    // let dataSource = new MatTableDataSource(ELEMENT_DATA);
+    // dataSource.filter = filterValue.trim().toLowerCase();
+  }
 
 }
