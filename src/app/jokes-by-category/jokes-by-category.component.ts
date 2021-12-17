@@ -1,14 +1,13 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { MatSort, Sort } from "@angular/material/sort";
 import { JokeCategoriesService } from "../services/joke-categories.service";
-import { startWith, switchMap, map, catchError, debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-import { fromEvent, merge, of } from "rxjs";
+import { startWith, switchMap, map, catchError } from 'rxjs/operators';
+import { merge, of } from "rxjs";
 import { JokeCategory } from '../model/category';
 import { Joke } from '../model/joke';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { LocalStorageService } from '../services/local-storage.service';
-import { MatTableDataSource } from '@angular/material/table';
 @Component({
     selector: 'jokes-by-category',
     templateUrl: './jokes-by-category.component.html',
@@ -52,8 +51,6 @@ export class JokesByCategoryComponent implements OnInit {
     jokes: Joke[] = [];
     sortedJokes: Joke[];
 
-    // dataSource = new MatTableDataSource(ELEMENT_DATA);
-
     loading = false;
 
     jokeCategory: JokeCategory;
@@ -93,7 +90,6 @@ export class JokesByCategoryComponent implements OnInit {
         return this.flagOptions.filter((option) => option.name === flag)[0].checked;
     }
 
-    
     flagsTrigger() {
         this.allFlagsChecked = this.flagOptions.every(option => option.checked);
         this.activeFlags = ''
@@ -122,19 +118,20 @@ export class JokesByCategoryComponent implements OnInit {
     }
 
     flagsTableFilterTrigger() {
-        console.log(this.flagsForTableFilter.value);
-        console.log(this.sortedJokes);
+        this.sortedJokes.forEach(joke => {
+            joke.hidden = false
+        });
 
-        // return this.flagOptions.filter((option) => option.name === flag)[0].checked;
-        console.log(this.flagsForTableFilter.value[this.flagsForTableFilter.value.length - 1]);
-        
-        this.sortedJokes.filter((joke) => joke.flags[this.flagsForTableFilter.value[this.flagsForTableFilter.value.length - 1]] != true );
+        this.flagsForTableFilter.value.forEach(filterFlag => {
+            this.sortedJokes.filter((joke) => (joke.flags[filterFlag] == false)).map(joke => {
+                joke.hidden = true;
+            });
 
-        console.log(this.sortedJokes);
+        });
         
-        // this.sortedJokes = [];
-        // this.sortedJokes.pop();
-        
+
+        this.sortedJokes = [...this.sortedJokes]
+
     }
 
     loadJokes(category: string, flags = '') {
@@ -187,10 +184,10 @@ export class JokesByCategoryComponent implements OnInit {
         }
     }
 
-      applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    // let dataSource = new MatTableDataSource(ELEMENT_DATA);
-    // dataSource.filter = filterValue.trim().toLowerCase();
-  }
+    applyFilter(event: Event) {
+        const filterValue = (event.target as HTMLInputElement).value;
+        // let dataSource = new MatTableDataSource(ELEMENT_DATA);
+        // dataSource.filter = filterValue.trim().toLowerCase();
+    }
 
 }

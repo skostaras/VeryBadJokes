@@ -15,7 +15,7 @@
             </mat-checkbox>
         </span>
 
-        <span *ngFor=" let option of flagOptions">
+        <span *ngFor="let option of flagOptions">
             <mat-checkbox [(ngModel)]="option.checked" [formControlName]=option.name (ngModelChange)="flagsTrigger()">{{
                 option.name }}</mat-checkbox>
         </span>
@@ -31,10 +31,10 @@
     <mat-form-field appearance="fill">
         <mat-label>Filter Table By Flags</mat-label>
         <mat-select [formControl]="flagsForTableFilter" multiple>
-          <mat-option *ngFor="let option of flagOptions" [value]="option.name">{{option.name}}</mat-option>
+            <mat-option *ngFor="let option of flagOptions" [value]="option.name">{{option.name}}</mat-option>
         </mat-select>
-      </mat-form-field>
-      
+    </mat-form-field>
+
 
     <div class="spinner-div-container">
         <span class="spinner-container" *ngIf="loading">
@@ -42,8 +42,8 @@
         </span>
     </div>
 
-    <mat-table class="jokes-table mat-elevation-z8" [dataSource]="sortedJokes" matSort matSortActive="category"
-        matSortDirection="asc" matSortDisableClear (matSortChange)="sortData($event)">
+    <mat-table class="jokes-table mat-elevation-z8" [dataSource]="sortedJokes | tableFilter" matSort
+        matSortActive="category" matSortDirection="asc" matSortDisableClear (matSortChange)="sortData($event)">
 
         <ng-container matColumnDef="category">
             <mat-header-cell *matHeaderCellDef mat-sort-header="category">Category</mat-header-cell>
