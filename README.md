@@ -1,6 +1,6 @@
 # How to install & run this repository
 
-We can install the master branch using the following commands:
+You can import the repository using the following command:
 
     git clone https://github.com/skostaras/VeryBadJokes.git
     
@@ -26,10 +26,10 @@ https://sv443.net/jokeapi/v2/#info
 
 # How was it built?
 
-Angular, Rxjs, Angular Material.. the usual
+Angular, Rxjs, Angular Material.. the usual stuff
 
 
-Enjoy the Very Bad Jokes&trade; app! 
+**Enjoy the Very Bad Jokes&trade; app!**
 
 ![Happy face](https://livingprettyhappy.com/wp-content/uploads/2020/10/Girl-Laughing--e1603731896100-750x438.jpeg)
 
