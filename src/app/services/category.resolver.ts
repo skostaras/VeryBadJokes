@@ -11,7 +11,7 @@ export class CategoryResolver implements Resolve<JokeCategory> {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<JokeCategory> {
-        return this.jokeCategoriesService.findCategoryByDescription(route.params['category']);
+        return this.jokeCategoriesService.getCategoryByDescription(route.params['category']);
     }
 
 }

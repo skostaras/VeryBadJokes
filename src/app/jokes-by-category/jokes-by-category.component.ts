@@ -16,13 +16,16 @@ import { LocalStorageService } from '../services/local-storage.service';
 })
 export class JokesByCategoryComponent implements OnInit {
 
+    @ViewChild(MatSort, { static: true }) sort: MatSort;
+    @ViewChild('input', { static: true }) input: ElementRef;
+
     constructor(
         private route: ActivatedRoute,
         private jokeCategoriesService: JokeCategoriesService,
-        private fb: FormBuilder,
+        formBuilder: FormBuilder,
         private localStorageService: LocalStorageService
     ) {
-        this.jokeFlags = fb.group({
+        this.jokeFlags = formBuilder.group({
             nsfw: false,
             religious: false,
             political: false,
@@ -31,9 +34,6 @@ export class JokesByCategoryComponent implements OnInit {
             explicit: false,
         });
     }
-
-    @ViewChild(MatSort, { static: true }) sort: MatSort;
-    @ViewChild('input', { static: true }) input: ElementRef;
 
     flagOptions = [
         { name: 'nsfw', checked: false },
@@ -49,13 +49,13 @@ export class JokesByCategoryComponent implements OnInit {
     allFlagsChecked: boolean = false;
     flagsForTableFilter = new FormControl();
 
+    displayedColumns: string[] = ['category', 'joke', 'flags'];
+    loadingJokes = false;
+
     jokes: Joke[] = [];
     sortedJokes: Joke[];
 
-    loading = false;
-
     jokeCategory: JokeCategory;
-    displayedColumns: string[] = ['category', 'joke', 'flags'];
 
     ngOnInit() {
         this.flagsForTableFilter.valueChanges.subscribe(() => {
@@ -129,7 +129,7 @@ export class JokesByCategoryComponent implements OnInit {
             });
 
         });
-        
+
 
         this.sortedJokes = [...this.sortedJokes]
 
@@ -137,16 +137,16 @@ export class JokesByCategoryComponent implements OnInit {
 
     loadJokes(category: string, flags = '') {
 
-        this.loading = true;
+        this.loadingJokes = true;
         merge()
             .pipe(
                 startWith({}),
                 switchMap(() => {
-                    return this.jokeCategoriesService.findJokesByCategory(category, flags).pipe(catchError(() => of(null)));
+                    return this.jokeCategoriesService.getJokesByCategory(category, flags).pipe(catchError(() => of(null)));
                 }),
                 map(data => {
                     if (data === null) {
-                        this.loading = false;
+                        this.loadingJokes = false;
                         return [];
                     }
                     return data.jokes;
@@ -155,7 +155,7 @@ export class JokesByCategoryComponent implements OnInit {
             .subscribe(data => {
                 this.jokes = data;
                 this.sortedJokes = this.jokes.slice();
-                this.loading = false;
+                this.loadingJokes = false;
             }
             );
 

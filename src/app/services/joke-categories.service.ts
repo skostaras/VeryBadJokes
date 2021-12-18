@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { BehaviorSubject, Observable, Subject } from "rxjs";
+import { Observable } from "rxjs";
 import { JokeCategory } from '../model/category';
 import { JokeApi } from "../model/jokeApi";
 
@@ -42,13 +42,13 @@ export class JokeCategoriesService {
     return allCategories;
   }
 
-  findCategoryByDescription(description: string): Observable<JokeCategory> {
+  getCategoryByDescription(description: string): Observable<JokeCategory> {
     const categories: any = Object.values(this.jokeCategories);
     const category = categories.find(category => category.description == description);
     return category;
   }
 
-  findJokesByCategory(category = 'Any', flags = ''): Observable<JokeApi> {
+  getJokesByCategory(category = 'Any', flags = ''): Observable<JokeApi> {
     const requestUrl = 'https://v2.jokeapi.dev/joke/' + category;
     return this.http.get<JokeApi>(requestUrl, {
       params: new HttpParams()

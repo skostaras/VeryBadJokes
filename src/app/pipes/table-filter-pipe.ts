@@ -1,8 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-  name: 'tableFilter'
-})
+@Pipe({ name: 'tableFilter' })
 export class TableFilterPipe implements PipeTransform {
 
   transform(sortedList: any[]) {
@@ -10,7 +8,7 @@ export class TableFilterPipe implements PipeTransform {
     if (typeof sortedList == 'undefined') {
       return null;
     }
-    
+
     return sortedList.filter(joke => !joke.hidden)
   }
 

@@ -1,10 +1,9 @@
 import { Inject, Injectable } from '@angular/core';
-
 import { LOCAL_STORAGE } from './local-storage';
 
 @Injectable({ providedIn: 'root' })
 export class LocalStorageService {
-  constructor(@Inject(LOCAL_STORAGE) private readonly localStorage: Storage) {}
+  constructor(@Inject(LOCAL_STORAGE) private readonly localStorage: Storage) { }
 
   hasItem(key: string): boolean {
     return this.localStorage.getItem(key) !== null;

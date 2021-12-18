@@ -26,8 +26,8 @@ import { HttpClientModule } from "@angular/common/http";
 import { CategoryResolver } from "./services/category.resolver";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
-import { ActiveFlagsPipe } from './jokes-by-category/active-flags-pipe';
-import { TableFilterPipe } from './jokes-by-category/table-filter-pipe';
+import { ActiveFlagsPipe } from './pipes/active-flags-pipe';
+import { TableFilterPipe } from './pipes/table-filter-pipe';
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';

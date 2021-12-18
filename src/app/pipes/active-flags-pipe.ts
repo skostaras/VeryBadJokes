@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({ name: 'activeFlags' })
 export class ActiveFlagsPipe implements PipeTransform {
+
   transform(jokeFlags: any) {
 
     let allFlags = '';
@@ -14,13 +15,11 @@ export class ActiveFlagsPipe implements PipeTransform {
         } else {
           allFlags = allFlags.concat(key)
         }
-
       }
 
     });
 
     return allFlags;
-
   }
 
 }
