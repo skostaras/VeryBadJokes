@@ -4,7 +4,7 @@ We can install the master branch using the following commands:
 
     git clone https://github.com/skostaras/VeryBadJokes.git
     
-Make sure you're on Master branch
+Make sure you're on Main branch
 
 then..
 
