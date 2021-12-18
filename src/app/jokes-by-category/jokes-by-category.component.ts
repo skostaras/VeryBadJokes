@@ -45,7 +45,7 @@ export class JokesByCategoryComponent implements OnInit {
     ];
 
     jokeFlags: FormGroup;
-    activeFlags: string;
+    activeBlacklistFlags: string;
     allFlagsChecked: boolean = false;
     flagsForTableFilter = new FormControl();
 
@@ -69,10 +69,10 @@ export class JokesByCategoryComponent implements OnInit {
     }
 
     setActiveFlagsFromLocalStorage() {
-        this.activeFlags = this.localStorageService.getItem('activeFlags')
+        this.activeBlacklistFlags = this.localStorageService.getItem('activeFlags')
 
         this.flagOptions.forEach(flag => {
-            if (this.activeFlags.includes(flag.name)) {
+            if (this.activeBlacklistFlags.includes(flag.name)) {
                 flag.checked = true
             }
         });
@@ -91,22 +91,22 @@ export class JokesByCategoryComponent implements OnInit {
         return this.flagOptions.filter((option) => option.name === flag)[0].checked;
     }
 
-    flagsTrigger() {
+    flagsBlacklistTrigger() {
         this.allFlagsChecked = this.flagOptions.every(option => option.checked);
-        this.activeFlags = ''
+        this.activeBlacklistFlags = ''
 
         this.flagOptions.forEach(flag => {
             if (this.jokeFlags.get(flag.name).value === true) {
-                this.activeFlags = this.activeFlags + flag.name + ',';
+                this.activeBlacklistFlags = this.activeBlacklistFlags + flag.name + ',';
             }
         });
 
         //removes last comma
-        if (this.activeFlags.split(',').length > 1) {
-            this.activeFlags = this.activeFlags.substring(0, this.activeFlags.length - 1);
+        if (this.activeBlacklistFlags.split(',').length > 1) {
+            this.activeBlacklistFlags = this.activeBlacklistFlags.substring(0, this.activeBlacklistFlags.length - 1);
         }
 
-        this.localStorageService.setItem('activeFlags', this.activeFlags);
+        this.localStorageService.setItem('activeFlags', this.activeBlacklistFlags);
     }
 
     setAllFlags(checked: boolean) {
@@ -123,6 +123,7 @@ export class JokesByCategoryComponent implements OnInit {
             joke.hidden = false
         });
 
+        //hides jokes not containing the selected flag (AND not OR)
         this.flagsForTableFilter.value.forEach(filterFlag => {
             this.sortedJokes.filter((joke) => (joke.flags[filterFlag] == false)).map(joke => {
                 joke.hidden = true;
@@ -130,9 +131,7 @@ export class JokesByCategoryComponent implements OnInit {
 
         });
 
-
         this.sortedJokes = [...this.sortedJokes]
-
     }
 
     loadJokes(category: string, flags = '') {
@@ -142,7 +141,7 @@ export class JokesByCategoryComponent implements OnInit {
             .pipe(
                 startWith({}),
                 switchMap(() => {
-                    return this.jokeCategoriesService.getJokesByCategory(category, flags).pipe(catchError(() => of(null)));
+                    return this.jokeCategoriesService.getJokesByCategory(category, flags);
                 }),
                 map(data => {
                     if (data === null) {
@@ -183,12 +182,6 @@ export class JokesByCategoryComponent implements OnInit {
         function compare(a: number | string, b: number | string, isAsc: boolean) {
             return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
         }
-    }
-
-    applyFilter(event: Event) {
-        const filterValue = (event.target as HTMLInputElement).value;
-        // let dataSource = new MatTableDataSource(ELEMENT_DATA);
-        // dataSource.filter = filterValue.trim().toLowerCase();
     }
 
 }

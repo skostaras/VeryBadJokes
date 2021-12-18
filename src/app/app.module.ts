@@ -64,7 +64,7 @@ import { CommonModule } from '@angular/common';
         MatSelectModule,
         MatDatepickerModule,
         MatMomentDateModule,
-        ReactiveFormsModule,
+        ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
         MatCheckboxModule,
     ],
     providers: [

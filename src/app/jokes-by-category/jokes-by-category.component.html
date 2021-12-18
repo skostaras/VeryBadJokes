@@ -16,14 +16,14 @@
 
             <span *ngFor="let option of flagOptions">
                 <mat-checkbox [(ngModel)]="option.checked" [formControlName]=option.name
-                    (ngModelChange)="flagsTrigger()">{{
+                    (ngModelChange)="flagsBlacklistTrigger()">{{
                     option.name }}</mat-checkbox>
             </span>
         </section>
 
         <section>
             <button mat-button class="mat-raised-button mat-primary default-color"
-                (click)="loadJokes(this.jokeCategory.description, this.activeFlags);">
+                (click)="loadJokes(this.jokeCategory.description, this.activeBlacklistFlags);">
                 Search New Jokes
             </button>
         </section>
