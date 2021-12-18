@@ -1,4 +1,4 @@
-# How To install & run this repository
+# How to install & run this repository
 
 We can install the master branch using the following commands:
 
@@ -7,6 +7,7 @@ We can install the master branch using the following commands:
 Make sure you're on Master branch
 
 then..
+
     npm install
 
 ...and finally
@@ -27,7 +28,8 @@ https://sv443.net/jokeapi/v2/#info
 
 Angular, Rxjs, Angular Material.. the usual
 
-If you are looking for the [Angular PWA Course](https://angular-university.io/course/angular-pwa-course), the repo with the full code can be found here:
 
-![Angular PWA Course - Build the future of the Web Today](https://livingprettyhappy.com/wp-content/uploads/2020/10/Girl-Laughing--e1603731896100-750x438.jpeg)
+Enjoy the Very Bad Jokes&trade; app! 
+
+![Happy face](https://livingprettyhappy.com/wp-content/uploads/2020/10/Girl-Laughing--e1603731896100-750x438.jpeg)
 
