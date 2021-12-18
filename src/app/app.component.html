@@ -1,41 +1,40 @@
 <mat-sidenav-container fullscreen>
-    <mat-sidenav #start style="background-color: #7e3399;">
+    <mat-sidenav #start class="default-background-color">
         <mat-nav-list>
 
             <a *ngFor="let jokeCategory of jokeCategories" mat-list-item
-                [href]="['/categories/' + jokeCategory.description]" style="color: white;">
+                [href]="['/categories/' + jokeCategory.description]" class="sidebar">
                 <mat-icon>chevron_right</mat-icon>
                 <span>{{jokeCategory.description}}</span>
             </a>
 
         </mat-nav-list>
-
     </mat-sidenav>
 
-    <mat-toolbar color="primary" style="background-color: #7e3399;">
-        <button mat-icon-button (click)="start.open('mouse')" class="example-icon"
-            aria-label="Example icon-button with menu icon">
+    <mat-toolbar color="primary" class="default-background-color">
+
+        <button mat-icon-button (click)="start.open('mouse')">
             <mat-icon>menu</mat-icon>
         </button>
-        <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon"
-            [routerLink]="['/']">
+
+        <button mat-icon-button [routerLink]="['/']">
             <mat-icon>home</mat-icon>
         </button>
-        <span class="example-spacer"></span>
+
+        <span class="spacer"></span>
         <span>Very Bad Jokes&trade;</span>
 
     </mat-toolbar>
 
+    <router-outlet (activate)="onHomePageLoaded($event)"></router-outlet>
 
-    <router-outlet></router-outlet>
+    <mat-toolbar color="primary" class="default-background-color footer">
+        <span class="spacer"></span>
 
-
-    <mat-toolbar color="primary" style="background-color: #7e3399; height: 45px;">
-        <span class="example-spacer"></span>
-        <span style="font-size: initial;">Made by Stefanos Kostaras, <small>with the help
-                of&nbsp;&nbsp;</small></span><a href="https://sv443.net/jokeapi/v2/#info"><small>JokeAPI</small></a>
-
-        <!-- https://sv443.net/jokeapi/v2/#info -->
+        <span>Created by Stefanos Kostaras, <small>with the help
+                of&nbsp;&nbsp;</small></span><a href="https://sv443.net/jokeapi/v2/#info"
+            target="blank"><small>JokeAPI</small></a>
 
     </mat-toolbar>
+
 </mat-sidenav-container>

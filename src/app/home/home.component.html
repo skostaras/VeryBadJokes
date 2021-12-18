@@ -1,29 +1,23 @@
 <div class="categories-panel">
 
-    <h2 style="text-align: center; margin-top: 35px;">Joke Categories</h2>
+    <h2 class="categories-title">Joke Categories</h2>
 
-    <div id="categoriesCards">
+    <mat-card *ngFor="let category of jokeCategories" class="category-card mat-elevation-z10">
 
-        <mat-card *ngFor="let category of jokeCategories" class="category-card mat-elevation-z10">
+        <mat-card-header>
+            <mat-card-title>{{category.description}}</mat-card-title>
+        </mat-card-header>
 
-            <mat-card-header>
+        <img mat-card-image [src]="category.iconUrl" [routerLink]="['/categories', category.description]"
+            class="category-image">
 
-                <mat-card-title>{{category.description}}</mat-card-title>
+        <mat-card-actions class="category-actions">
+            <button mat-button class="mat-raised-button mat-primary category-button"
+                [routerLink]="['/categories', category.description]">
+                VIEW JOKES
+            </button>
+        </mat-card-actions>
 
-            </mat-card-header>
-
-            <img mat-card-image [src]="category.iconUrl" [routerLink]="['/categories', category.description]"
-                style="cursor: pointer">
-
-            <mat-card-actions class="category-actions">
-                <button mat-button class="mat-raised-button mat-primary" style="background-color: #7e3399;"
-                    [routerLink]="['/categories', category.description]">
-                    VIEW JOKES
-                </button>
-            </mat-card-actions>
-
-        </mat-card>
-
-    </div>
+    </mat-card>
 
 </div>

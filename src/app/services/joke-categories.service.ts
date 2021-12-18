@@ -1,8 +1,6 @@
-
-
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { JokeCategory } from '../model/category';
 import { JokeApi } from "../model/jokeApi";
 
@@ -39,15 +37,15 @@ export class JokeCategoriesService {
     },
   };
 
+  getAllCategories(): Observable<JokeCategory[]> {
+    const allCategories: any = Object.values(this.jokeCategories);
+    return allCategories;
+  }
+
   findCategoryByDescription(description: string): Observable<JokeCategory> {
     const categories: any = Object.values(this.jokeCategories);
     const category = categories.find(category => category.description == description);
     return category;
-  }
-
-  getAllCategories(): Observable<JokeCategory[]> {
-    const allCategories: any = Object.values(this.jokeCategories);
-    return allCategories;
   }
 
   findJokesByCategory(category = 'Any', flags = ''): Observable<JokeApi> {
@@ -62,30 +60,5 @@ export class JokeCategoriesService {
     }
     );
   }
-
-
-  //   searchLessons(req: Request, res: Response) {
-
-  //     const queryParams = req.query;
-
-  //     const courseId = queryParams.courseId,
-  //           filter = queryParams.filter || '',
-  //           sortOrder = queryParams.sortOrder;
-
-  //     let lessons = Object.values(LESSONS).filter(lesson => lesson.courseId == courseId).sort((l1, l2) => l1.id - l2.id);
-
-  //     if (filter) {
-  //        lessons = lessons.filter(lesson => lesson.description.trim().toLowerCase().search(filter.toLowerCase()) >= 0);
-  //     }
-
-  //     if (sortOrder == "desc") {
-  //         lessons = lessons.reverse();
-  //     }
-
-  //     setTimeout(() => {
-  //         res.status(200).json({payload: lessons});
-  //     },1000);
-
-  // }
 
 }

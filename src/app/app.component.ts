@@ -20,4 +20,8 @@ export class AppComponent {
     this.jokeCategories = this.jokeCategoriesService.getAllCategories();
   }
 
+  onHomePageLoaded(homePage) {
+    homePage.jokeCategories = this.jokeCategories;
+  }
+
 }

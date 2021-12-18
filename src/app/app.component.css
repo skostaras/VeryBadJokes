@@ -7,6 +7,18 @@ main {
     margin: 30px;
 }
 
-.example-spacer {
+.spacer {
     flex: 1 1 auto;
   }
+
+.default-background-color {
+    background-color: #7e3399;
+}
+
+.sidebar {
+    color: white;
+}
+.footer {
+    height: 45px;
+    font-size: initial;
+}

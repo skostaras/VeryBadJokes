@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable } from "rxjs";
-import { JokeCategoriesService } from "../services/joke-categories.service";
 import { JokeCategory } from '../model/category';
 
 @Component({
@@ -8,16 +7,12 @@ import { JokeCategory } from '../model/category';
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
     jokeCategories: Observable<JokeCategory[]>;
 
-    constructor(private jokeCategoriesService: JokeCategoriesService) {
+    constructor() {
 
-    }
-
-    ngOnInit() {
-        this.jokeCategories = this.jokeCategoriesService.getAllCategories();
     }
 
 }
