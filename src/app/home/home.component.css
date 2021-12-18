@@ -1,0 +1,26 @@
+.categories-panel {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.category-card {
+    margin: 20px 10px;
+}
+
+.category-actions {
+    text-align: center;
+    margin-bottom: 0 !important;
+}
+
+.categories-title {
+    text-align: center; 
+    margin-top: 35px;
+}
+
+.category-image {
+    cursor: pointer
+}
+
+.category-button {
+    background-color: #7e3399;
+}

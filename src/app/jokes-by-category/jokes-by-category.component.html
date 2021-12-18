@@ -1,0 +1,72 @@
+<div class="category">
+
+    <h1>{{jokeCategory?.description}}</h1>
+
+    <img class="category-thumbnail" [src]="jokeCategory?.iconUrl">
+
+    <fieldset>
+        <legend class="default-color">Search Options</legend>
+        <section class="form" [formGroup]="jokeFlags">
+            <h3>Blacklist Flags:</h3>
+
+            <mat-checkbox [checked]="allFlagsChecked" [indeterminate]="someFlagsChecked()"
+                (change)="setAllFlags($event.checked)">
+                <span [innerHTML]="allFlagsChecked?'Clear All':'Select All'"></span>
+            </mat-checkbox>
+
+            <span *ngFor="let option of flagOptions">
+                <mat-checkbox [(ngModel)]="option.checked" [formControlName]=option.name
+                    (ngModelChange)="flagsBlacklistTrigger()">{{
+                    option.name }}</mat-checkbox>
+            </span>
+        </section>
+
+        <section>
+            <button mat-button class="mat-raised-button mat-primary default-color"
+                (click)="loadJokes(this.jokeCategory.description, this.activeBlacklistFlags);">
+                Search New Jokes
+            </button>
+        </section>
+
+    </fieldset>
+
+
+    <mat-form-field appearance="fill" class="filter-dropdown">
+        <mat-label>Filter Table By Flags</mat-label>
+        <mat-select [formControl]="flagsForTableFilter" multiple>
+            <mat-option *ngFor="let option of flagOptions" [value]="option.name">{{option.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+
+    <div class="spinner-div-container">
+        <span class="spinner-container" *ngIf="loadingJokes">
+            <mat-spinner></mat-spinner>
+        </span>
+    </div>
+
+    <mat-table class="jokes-table mat-elevation-z8" [dataSource]="sortedJokes | tableFilter" matSort
+        matSortActive="category" matSortDirection="asc" matSortDisableClear (matSortChange)="sortData($event)">
+
+        <ng-container matColumnDef="category">
+            <mat-header-cell *matHeaderCellDef mat-sort-header="category">Category</mat-header-cell>
+            <mat-cell *matCellDef="let joke">{{joke.category}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="joke">
+            <mat-header-cell *matHeaderCellDef>Joke</mat-header-cell>
+            <mat-cell class="joke-cell" *matCellDef="let joke">{{joke.joke}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="flags">
+            <mat-header-cell *matHeaderCellDef>Flags</mat-header-cell>
+            <mat-cell class="flags-cell" *matCellDef="let joke">{{joke.flags | activeFlags}}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+    </mat-table>
+
+</div>
